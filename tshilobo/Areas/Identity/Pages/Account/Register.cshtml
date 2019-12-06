@@ -1,0 +1,140 @@
+﻿@page
+@model RegisterModel
+@{
+    ViewData["Title"] = "Register";
+    Layout = "_AuthenticationLayout";
+}
+
+<!-- Header
+    ================================================= -->
+<header id="header-inverse">
+    <nav class="navbar navbar-default navbar-fixed-top menu">
+        <div class="container">
+
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <a class="navbar-brand" href="index-register.html"><img src="~/images/logo.png" alt="logo" /></a>
+            </div>
+            <div class="nav navbar-nav navbar-right">
+                <a class="btn btn-primary" asp-page="./Login">Login</a>
+            </div>
+
+        </div><!-- /.container -->
+    </nav>
+</header>
+<!--Header End-->
+<!-- Registration Page Contents
+================================================= -->
+<div id="lp-register">
+    <div class="container wrapper">
+        <div class="row">
+            <div class="col-sm-5">
+                <div class="intro-texts">
+                    <h1 class="text-white">Make Cool Friends !!!</h1>
+                    <p>Friend Finder is a social network template that can be used to connect people. The template offers Landing pages, News Feed, Image/Video Feed, Chat Box, Timeline and lot more. <br /> <br />Why are you waiting for? Buy it now.</p>
+                    <button class="btn btn-primary">Learn More</button>
+                </div>
+            </div>
+            <div class="col-sm-6 col-sm-offset-1">
+                <div class="reg-form-container">
+                    <!--Registration Form Contents-->
+                    <div class="tab-content">
+                        <div class="tab-pane active" id="register">
+                            <h3>Register Now !!!</h3>
+                            <p class="text-muted">Be cool and join today. Meet millions</p>
+
+                            @if (!String.IsNullOrEmpty(Model.RegistrationStatusMessage))
+                            {
+                                <div class="alert alert-danger alert-dismissible" role="alert">
+                                    <button type="button" class="close" data-dismiss="alert" aria-label="Close"><span aria-hidden="true">&times;</span></button>
+                                    @Model.RegistrationStatusMessage
+                                </div>
+                            }
+
+                            <form asp-route-returnurl="@Model.ReturnUrl" name="registration_form" id='registration_form' class="form-inline">
+                                <div asp-validation-summary="All" class="text-danger"></div>
+                                <div class="row">
+                                    <div class="form-group col-xs-6">
+                                        <label asp-for="Input.FirstName" class="sr-only"></label>
+                                        <input asp-for="Input.FirstName" class="form-control input-group-lg" placeholder="Name" type="text" maxlength="100" minLength="2" />
+                                        <span asp-validation-for="Input.FirstName" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-xs-6">
+                                        <label asp-for="Input.LastName" class="sr-only"></label>
+                                        <input asp-for="Input.LastName" class="form-control input-group-lg" placeholder="Surname" type="text" maxlength="100" minLength="2" />
+                                        <span asp-validation-for="Input.LastName" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <label asp-for="Input.Email" class="sr-only"></label>
+                                        <input asp-for="Input.Email" class="form-control input-group-lg" placeholder="Email Address" type="email" />
+                                        <span asp-validation-for="Input.Email" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <p class="birth"><strong>Date of Birth</strong></p>
+                                    <div class="form-group col-sm-3 col-xs-6">
+                                        <label asp-for="Input.Day" class="sr-only"></label>
+                                        <select asp-for="Input.Day" asp-items="@Model.Day" class="form-control"></select>
+                                        <span asp-validation-for="Input.Day" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-sm-3 col-xs-6">
+                                        <label asp-for="Input.Month" class="sr-only"></label>
+                                        <select asp-for="Input.Month" asp-items="@Model.Month" class="form-control"></select>
+                                        <span asp-validation-for="Input.Month" class="text-danger"></span>
+                                    </div>
+                                    <div class="form-group col-sm-6 col-xs-12">
+                                        <label asp-for="Input.BirthYear" class="sr-only"></label>
+                                        <select asp-for="Input.BirthYear" asp-items="@Model.Year" class="form-control">
+                                            <option value="" hidden disabled selected>Year</option>
+                                        </select>
+                                        <span asp-validation-for="Input.BirthYear" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <label asp-for="Input.GenderId" class="sr-only"></label>
+                                        <select asp-for="Input.GenderId" asp-items="@Model.Gender" class="form-control">
+                                            <option value="" hidden disabled selected>Gender</option>
+                                        </select>
+                                        <span asp-validation-for="Input.GenderId" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <label asp-for="Input.Password" class="sr-only"></label>
+                                        <input asp-for="Input.Password" class="form-control input-group-lg" type="password" placeholder="Password" maxlength="100" minLength="8" />
+                                        <span asp-validation-for="Input.Password" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <div class="row">
+                                    <div class="form-group col-xs-12">
+                                        <label asp-for="Input.ConfirmPassword" class="sr-only"></label>
+                                        <input asp-for="Input.ConfirmPassword" class="form-control input-group-lg" type="password" placeholder="Confirm Password" />
+                                        <span asp-validation-for="Input.ConfirmPassword" class="text-danger"></span>
+                                    </div>
+                                </div>
+                                <p><a asp-page="./Login">Already have an account?</a></p>
+                                <button class="btn btn-primary" type="submit">Register Now</button>
+                            </form>
+                            <!--Register Now Form Ends-->
+                        </div><!--Registration Form Contents Ends-->
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}
+
+
+
+
+
+
+
