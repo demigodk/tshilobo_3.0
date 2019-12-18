@@ -29,16 +29,25 @@ namespace tshilobo
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });
+            });           
 
             services.AddDbContext<ApplicationDbContext>(options =>
-                    options.UseSqlServer(Configuration.GetConnectionString("tshiloboContextConnection")));            
+                    options.UseSqlServer(Configuration.GetConnectionString("tshiloboContextConnection")));           
+
+            services.AddAuthentication()
+               .AddGoogle(options =>
+               {
+                   options.ClientId = "223233651576-0amvrep280rdu22meedrbm9qcllv2c82.apps.googleusercontent.com";
+                   options.ClientSecret = "JIcewHxq3RgR6uN-OUmMp2d4";
+               })
+               .AddFacebook(options =>
+               {
+                   options.AppId = "580818262673828";
+                   options.ClientSecret = "9554e994ccd407b39d1dca2221e61fc1";
+               });
 
             // Returns list items for Gender, Day, Month & Year
-            services.AddScoped<IListItem, ListItem>();            
-
-            //services.AddMvc().SetCompatibilityVersion(CompatibilityVersion.Version_3_0);
-
+            services.AddScoped<IListItem, ListItem>();                       
             services.AddRazorPages();
         }
 
@@ -64,7 +73,7 @@ namespace tshilobo
 
             app.UseAuthentication();
             app.UseAuthorization();
-
+           
             app.UseEndpoints(endpoints =>
             {
                 endpoints.MapRazorPages();

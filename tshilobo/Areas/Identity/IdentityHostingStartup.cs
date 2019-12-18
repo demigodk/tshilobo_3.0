@@ -17,9 +17,10 @@ namespace tshilobo.Areas.Identity
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("tshiloboContextConnection")));
 
-                services.AddDefaultIdentity<tshiloboUser>(options => options.SignIn.RequireConfirmedAccount = false)
+                services.AddDefaultIdentity<tshiloboUser>(options => options.SignIn.RequireConfirmedAccount = true)
                     .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<tshiloboDbContext>();               
+                    .AddEntityFrameworkStores<tshiloboDbContext>()
+                    .AddDefaultTokenProviders();
             });
         }
     }

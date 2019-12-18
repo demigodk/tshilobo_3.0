@@ -49,6 +49,14 @@ namespace tshilobo.Areas.Identity.Pages.Account
             [Required]
             [EmailAddress]
             public string Email { get; set; }
+
+            [Required]
+            [Display(Name = "First Name")]
+            public string FirstName { get; set; }
+
+            public string Birthday { get; set; }
+
+            public string picture { get; set; }
         }
 
         public IActionResult OnGetAsync()
@@ -99,8 +107,11 @@ namespace tshilobo.Areas.Identity.Pages.Account
                 {
                     Input = new InputModel
                     {
-                        Email = info.Principal.FindFirstValue(ClaimTypes.Email)
-                    };
+                        FirstName = info.Principal.FindFirstValue(ClaimTypes.Name),
+                        Email = info.Principal.FindFirstValue(ClaimTypes.Email),              
+                       //picture = $"https://graph.facebook.com/{identifier}/picture?type=large"
+                       picture = $"https://graph.facebook.com/" + info.Principal.FindFirstValue(ClaimTypes.NameIdentifier) + "/picture?type=large"
+                };
                 }
                 return Page();
             }

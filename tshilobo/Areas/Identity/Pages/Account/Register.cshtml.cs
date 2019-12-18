@@ -147,23 +147,44 @@ namespace tshilobo.Areas.Identity.Pages.Account
 
                     if (result.Succeeded)
                     {
+
+
+                        //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
+                        // Setting confirmation link
+                        //var confirmationLink = Url.Action("ConfirmEmail", "Account",
+                        //    new { _userId = user.Id, token = token }, Request.Scheme);
+
+                        //_logger.Log(LogLevel.Warning, confirmationLink);
+
                         // Add user to default role
                         await _userManager.AddToRoleAsync(user, "AppUser");
 
                         _logger.LogInformation("User Created A New Account With Password.");
 
+                        // Generate e-mail confirmation token
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+                        // Setting confirmation link
                         var callbackUrl = Url.Page(
                             "/Account/ConfirmEmail",
                             pageHandler: null,
                             values: new { userId = user.Id, code = code },
                             protocol: Request.Scheme);
 
+                        _logger.Log(LogLevel.Warning, callbackUrl);
+
                         await _emailSender.SendEmailAsync(Input.Email, "Confirm Your Email",
                             $"Please Confirm Your Account By <a href='{HtmlEncoder.Default.Encode(callbackUrl)}'>Clicking Here</a>.");
 
-                        await _signInManager.SignInAsync(user, isPersistent: false);
-                        return LocalRedirect(returnUrl);
+                        if (_userManager.Options.SignIn.RequireConfirmedAccount)
+                        {
+                            return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
+                        }
+                        else
+                        {
+                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            return LocalRedirect(returnUrl);
+                        }                        
                     }
                     foreach (var error in result.Errors)
                     {
