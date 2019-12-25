@@ -182,7 +182,7 @@ namespace tshilobo.Areas.Identity.Pages.Account
                         }
                         else
                         {
-                            await _signInManager.SignInAsync(user, isPersistent: false);
+                            //await _signInManager.SignInAsync(user, isPersistent: false);
                             return LocalRedirect(returnUrl);
                         }                        
                     }
@@ -201,8 +201,11 @@ namespace tshilobo.Areas.Identity.Pages.Account
             // If we got this far, something failed, redisplay form
             return Page();
         }
-
-        // Validates the Date Of Birth (Provided) and returns a boolean value
+       
+        /// <summary>
+        /// Validates the Date Of Birth (Provided) and returns a boolean value
+        /// </summary>
+        /// <returns></returns>
         private bool DOBValidator()
         {
             if (Convert.ToInt32(Input.Day) <= 30 && (Convert.ToInt32(Input.Month) == 4 || Convert.ToInt32(Input.Month) == 6

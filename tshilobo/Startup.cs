@@ -2,6 +2,7 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Hosting;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Identity;
+using Microsoft.AspNetCore.Identity.UI.Services;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
@@ -9,6 +10,7 @@ using Microsoft.Extensions.Hosting;
 using tshilobo.Data;
 using tshilobo.Data.Entities;
 using tshilobo.Data.Services.AuthenticationRelated;
+using tshilobo.Data.Services.Email;
 
 namespace tshilobo
 {
@@ -23,7 +25,7 @@ namespace tshilobo
 
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
-        {
+        {            
             services.Configure<CookiePolicyOptions>(options =>
             {
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
@@ -45,13 +47,14 @@ namespace tshilobo
                    options.AppId = "580818262673828";
                    options.ClientSecret = "9554e994ccd407b39d1dca2221e61fc1";
                });
-
+            
             // Returns list items for Gender, Day, Month & Year
-            services.AddScoped<IListItem, ListItem>();                       
+            services.AddScoped<IListItem, ListItem>();
+            services.AddTransient<IEmailSender, EmailSender>();
+            services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddRazorPages();
         }
-
-        // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
+        
         public void Configure(IApplicationBuilder app, IWebHostEnvironment env, UserManager<tshiloboUser> userManager)
         {
             if (env.IsDevelopment())

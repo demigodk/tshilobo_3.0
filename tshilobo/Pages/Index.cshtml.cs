@@ -1,6 +1,8 @@
 ﻿using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc.RazorPages;
 using Microsoft.Extensions.Logging;
+using System.Threading.Tasks;
+using tshilobo.Data.Services.Email;
 
 namespace tshilobo.Pages
 {
@@ -14,9 +16,9 @@ namespace tshilobo.Pages
             _logger = logger;
         }
 
-        public void OnGet()
+        public void OnGet(int id)
         {
 
-        }
+        }       
     }
 }

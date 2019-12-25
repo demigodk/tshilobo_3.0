@@ -1,17 +1,20 @@
-using System;
-using System.Collections.Generic;
-using System.ComponentModel.DataAnnotations;
-using System.Linq;
-using System.Threading.Tasks;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.RazorPages;
+using System;
+using System.ComponentModel.DataAnnotations;
+using System.Threading.Tasks;
 
 namespace tshilobo.Pages.Church
 {
     [Authorize]
     public class CreateChurchModel : PageModel
     {
+        public string ReturnUrl { get; set; }
+
+        [BindProperty]
+        public InputModel Input { get; set; }
+
         public class InputModel
         {
             [Required]
@@ -49,8 +52,14 @@ namespace tshilobo.Pages.Church
             public int MainBranchId { get; set; }
         }
 
-        public void OnGet()
-        {
+        public void OnGet(string returnUrl = null)
+        {           
+                ReturnUrl = returnUrl;
         }
+
+        //public async Task<IActionResult> OnPostAsync(string returnUrl = null)
+        //{
+        //    returnUrl = returnUrl ?? Url.Content("~/");
+        //}
     }
 }

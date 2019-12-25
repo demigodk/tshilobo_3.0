@@ -1,7 +1,11 @@
 ﻿@page
-@model tshilobo.Pages.Church.CreateChurchModel
+@model CreateChurchModel
 @{
     ViewData["Title"] = "Create Church Account";
 }
 
+<form method="post" class="form-inline">
     <h1 class="text-success">Create Church Account</h1>
+    <input asp-for="Input.ChurchName" />
+</form>
+

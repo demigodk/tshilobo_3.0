@@ -49,8 +49,6 @@ namespace tshilobo
                 //Enable NLog as one of the Logging Provider
                 logging.AddNLog();
             })
-
-
-                .UseStartup<Startup>();
+            .UseStartup<Startup>();
     }
 }
