@@ -12,15 +12,19 @@ namespace tshilobo.Areas.Identity
     {
         public void Configure(IWebHostBuilder builder)
         {
-            builder.ConfigureServices((context, services) => {
+            builder.ConfigureServices((context, services) =>
+            {
                 services.AddDbContext<tshiloboDbContext>(options =>
                     options.UseSqlServer(
                         context.Configuration.GetConnectionString("tshiloboContextConnection")));
 
-                services.AddDefaultIdentity<tshiloboUser>(options => options.SignIn.RequireConfirmedAccount = true)
-                    .AddRoles<IdentityRole>()
-                    .AddEntityFrameworkStores<tshiloboDbContext>()
-                    .AddDefaultTokenProviders();
+                services.AddDefaultIdentity<tshiloboUser>(options =>
+                {
+                    options.SignIn.RequireConfirmedAccount = true;                    
+                })
+                .AddRoles<IdentityRole>()
+                .AddEntityFrameworkStores<tshiloboDbContext>()
+                .AddDefaultTokenProviders();
             });
         }
     }

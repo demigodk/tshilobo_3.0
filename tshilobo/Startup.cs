@@ -7,6 +7,7 @@ using Microsoft.EntityFrameworkCore;
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using System;
 using tshilobo.Data;
 using tshilobo.Data.Entities;
 using tshilobo.Data.Services.AuthenticationRelated;
@@ -31,7 +32,16 @@ namespace tshilobo
                 // This lambda determines whether user consent for non-essential cookies is needed for a given request.
                 options.CheckConsentNeeded = context => true;
                 options.MinimumSameSitePolicy = SameSiteMode.None;
-            });           
+            });
+
+            // Change email and activity timeout for email lifetime validity
+            services.ConfigureApplicationCookie(o => {
+                o.ExpireTimeSpan = TimeSpan.FromDays(5);
+                o.SlidingExpiration = true;
+            });
+
+            services.Configure<DataProtectionTokenProviderOptions>(o =>
+                o.TokenLifespan = TimeSpan.FromHours(3));
 
             services.AddDbContext<ApplicationDbContext>(options =>
                     options.UseSqlServer(Configuration.GetConnectionString("tshiloboContextConnection")));           
@@ -49,7 +59,7 @@ namespace tshilobo
                });
             
             // Returns list items for Gender, Day, Month & Year
-            services.AddScoped<IListItem, ListItem>();
+            services.AddScoped<IListItem, ListItem>();           
             services.AddTransient<IEmailSender, EmailSender>();
             services.Configure<AuthMessageSenderOptions>(Configuration);
             services.AddRazorPages();

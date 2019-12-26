@@ -146,17 +146,7 @@ namespace tshilobo.Areas.Identity.Pages.Account
                     var result = await _userManager.CreateAsync(user, Input.Password);
 
                     if (result.Succeeded)
-                    {
-
-
-                        //var token = await _userManager.GenerateEmailConfirmationTokenAsync(user);
-
-                        // Setting confirmation link
-                        //var confirmationLink = Url.Action("ConfirmEmail", "Account",
-                        //    new { _userId = user.Id, token = token }, Request.Scheme);
-
-                        //_logger.Log(LogLevel.Warning, confirmationLink);
-
+                    {                      
                         // Add user to default role
                         await _userManager.AddToRoleAsync(user, "AppUser");
 
@@ -164,6 +154,7 @@ namespace tshilobo.Areas.Identity.Pages.Account
 
                         // Generate e-mail confirmation token
                         var code = await _userManager.GenerateEmailConfirmationTokenAsync(user);
+
                         // Setting confirmation link
                         var callbackUrl = Url.Page(
                             "/Account/ConfirmEmail",
@@ -181,8 +172,7 @@ namespace tshilobo.Areas.Identity.Pages.Account
                             return RedirectToPage("RegisterConfirmation", new { email = Input.Email });
                         }
                         else
-                        {
-                            //await _signInManager.SignInAsync(user, isPersistent: false);
+                        {                           
                             return LocalRedirect(returnUrl);
                         }                        
                     }
